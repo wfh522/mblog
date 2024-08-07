@@ -245,11 +245,16 @@
 	</dependencies>
 
 	<repositories>
-		<!--使用阿里云库-->
 		<repository>
-			<id>nexus-aliyun</id>
-			<name>Nexus aliyun</name>
-			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
+			<id>aliyunmaven</id>
+			<name>阿里云公共仓库</name>
+			<url>https://maven.aliyun.com/repository/public</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
 		</repository>
 	</repositories>
 
@@ -333,4 +338,5 @@
 			</plugin>
 		</plugins>
 	</build>
+
 </project>
