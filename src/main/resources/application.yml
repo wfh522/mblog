@@ -1,11 +1,16 @@
 server:
     port: 8080
-    use-forward-headers: true
     undertow:
         io-threads: 2
         worker-threads: 32
         buffer-size: 1024
         directBuffers: true
+    forward-headers-strategy:
+    servlet:
+        encoding:
+            charset: UTF-8
+            force: true
+            enabled: true
 spring:
     profiles:
         active: @profileActive@
@@ -15,15 +20,12 @@ spring:
         type: ehcache
         ehcache:
             config: classpath:ehcache.xml
-    http:
-        encoding:
-            charset: UTF-8
-            force: true
-            enabled: true
     servlet:
         multipart:
             max-file-size: 10MB
             max-request-size: 10MB
+    main:
+        allow-circular-references: true
     freemarker:
         template-loader-path:
         - classpath:/templates

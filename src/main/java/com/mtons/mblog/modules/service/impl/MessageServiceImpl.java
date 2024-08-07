@@ -4,6 +4,8 @@ import com.mtons.mblog.base.lang.Consts;
 import com.mtons.mblog.modules.data.MessageVO;
 import com.mtons.mblog.modules.data.PostVO;
 import com.mtons.mblog.modules.entity.Message;
+import com.mtons.mblog.modules.entity.User;
+import com.mtons.mblog.modules.repository.UserRepository;
 import com.mtons.mblog.modules.service.PostService;
 import com.mtons.mblog.modules.repository.MessageRepository;
 import com.mtons.mblog.modules.data.UserVO;
@@ -30,9 +32,9 @@ public class MessageServiceImpl implements MessageService {
     @Autowired
     private MessageRepository messageRepository;
     @Autowired
-    private UserService userService;
-    @Autowired
     private PostService postService;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public Page<MessageVO> pagingByUserId(Pageable pageable, long userId) {
@@ -58,7 +60,7 @@ public class MessageServiceImpl implements MessageService {
 
         // 加载
         Map<Long, PostVO> posts = postService.findMapByIds(postIds);
-        Map<Long, UserVO> fromUsers = userService.findMapByIds(fromUserIds);
+        Map<Long, UserVO> fromUsers = findMapByIds(fromUserIds);
 
         rets.forEach(n -> {
             if (n.getPostId() > 0) {
@@ -70,6 +72,17 @@ public class MessageServiceImpl implements MessageService {
         });
 
         return new PageImpl<>(rets, pageable, page.getTotalElements());
+    }
+
+    public Map<Long, UserVO> findMapByIds(Set<Long> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return Collections.emptyMap();
+        }
+        List<User> list = userRepository.findAllById(ids);
+        Map<Long, UserVO> ret = new HashMap<>();
+
+        list.forEach(po -> ret.put(po.getId(), BeanMapUtils.copy(po)));
+        return ret;
     }
 
     @Override
