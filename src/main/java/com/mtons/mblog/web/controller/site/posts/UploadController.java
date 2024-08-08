@@ -39,7 +39,7 @@ public class UploadController extends BaseController {
         errorInfo.put("SUCCESS", "SUCCESS"); //默认成功
         errorInfo.put("NOFILE", "未包含文件上传域");
         errorInfo.put("TYPE", "不允许的文件格式");
-        errorInfo.put("SIZE", "文件大小超出限制，最大支持2Mb");
+        errorInfo.put("SIZE", "文件大小超出限制，最大支持10Mb");
         errorInfo.put("ENTYPE", "请求类型ENTYPE错误");
         errorInfo.put("REQUEST", "上传请求异常");
         errorInfo.put("IO", "IO异常");
